@@ -1,5 +1,5 @@
 # /// script
-# requires-python = "==3.12"
+# requires-python = "3.12"
 # dependencies = [
 #     "altair==5.5.0",
 #     "duckdb==1.4.0",
@@ -222,16 +222,16 @@ def _(mo):
 @app.cell
 def _(mo):
     form = (
-        mo.md('''
+        mo.md("""
         **Phrase Search**
 
         {phrase}
 
         {start_date}
-    
+
         {end_date}
 
-    ''')
+    """)
         .batch(
             phrase=mo.ui.text(label="phrase", value="korea"),
             start_date=mo.ui.date(label="start date", value="2022-01-01"),
@@ -249,15 +249,15 @@ def _(form, messages, pl):
         (pl.col("date") >= pl.lit(form.value["start_date"]))
         & (pl.col("date") <= pl.lit(form.value["end_date"]))
         & pl.col("text")
-            .str.to_lowercase()
-            .str.contains(form.value["phrase"].lower(), literal=True)
+        .str.to_lowercase()
+        .str.contains(form.value["phrase"].lower(), literal=True)
     )
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(r"""## Switch Between SQL and Dataframes """)
+    mo.md(r"""## Switch Between SQL and Dataframes""")
     return
 
 
@@ -270,7 +270,7 @@ def _(mo):
 @app.cell
 def _(combined, mo):
     _df = mo.sql(
-        f"""
+        """
         SELECT 
             first_name, 
             last_name, 
@@ -285,27 +285,24 @@ def _(combined, mo):
 
 
 @app.cell
+def _():
+    return
+
+
+@app.cell
 def _(alt, sql_out):
     _chart = (
         alt.Chart(sql_out)
         .mark_bar()
         .encode(
-            x=alt.X(field='latest_date', type='temporal', timeUnit='day'),
-            y=alt.Y(aggregate='count', type='quantitative'),
+            x=alt.X(field="latest_date", type="temporal", timeUnit="day"),
+            y=alt.Y(aggregate="count", type="quantitative"),
             tooltip=[
-                alt.Tooltip(field='latest_date', timeUnit='day', title='latest_date'),
-                alt.Tooltip(aggregate='count')
-            ]
+                alt.Tooltip(field="latest_date", timeUnit="day", title="latest_date"),
+                alt.Tooltip(aggregate="count"),
+            ],
         )
-        .properties(
-            height=290,
-            width='container',
-            config={
-                'axis': {
-                    'grid': False
-                }
-            }
-        )
+        .properties(height=290, width="container", config={"axis": {"grid": False}})
     )
     _chart
     return
