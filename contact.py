@@ -1,5 +1,5 @@
 # /// script
-# requires-python = "3.12"
+# requires-python = "==3.12"
 # dependencies = [
 #     "altair==5.5.0",
 #     "duckdb==1.4.0",
@@ -270,7 +270,7 @@ def _(mo):
 @app.cell
 def _(combined, mo):
     _df = mo.sql(
-        """
+        f"""
         SELECT 
             first_name, 
             last_name, 
