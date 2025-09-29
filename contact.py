@@ -269,7 +269,7 @@ def _(mo):
 
 @app.cell
 def _(combined, mo):
-    _df = mo.sql(
+    sql_out = mo.sql(
         f"""
         SELECT 
             first_name, 
@@ -281,12 +281,7 @@ def _(combined, mo):
         ORDER BY latest_date asc;
         """
     )
-    return
-
-
-@app.cell
-def _():
-    return
+    return (sql_out,)
 
 
 @app.cell
